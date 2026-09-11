@@ -1,0 +1,14 @@
+dist/
+build/
+.next/
+node_modules/
+playwright-report/
+test-results/
+coverage/
+package-lock.json
+*.woff2
+*.woff
+
+# Markdown is authored by hand (the governing docs are Aditya-owned; tables and prose
+# shouldn't be auto-reflowed). Prettier formats code only.
+**/*.md

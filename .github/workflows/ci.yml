@@ -1,0 +1,74 @@
+name: CI
+
+# Verification only. This re-runs the same gates the local Claude Code loop runs,
+# on a clean machine, so a broken build can't be merged into main and auto-deployed.
+# Deployment is NOT handled here — whatever hosts the product declares in CLAUDE.md §1
+# deploy on merge from their own dashboards. This workflow only asserts the code is green.
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+# Cancel superseded runs on the same branch to save minutes.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+# Verification needs nothing but the code. Stated explicitly so a product copying this
+# workflow never inherits a broader default token scope by accident.
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Unit / integration tests
+        run: npm run test
+
+      - name: Build
+        run: npm run build
+
+      # Chromium only: both Playwright projects (desktop + mobile viewport) are Chromium,
+      # so installing the full browser set would just cost CI minutes.
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: End-to-end tests
+        run: npm run e2e
+
+      # On any failure above (e2e is the likely one), publish the Playwright report and
+      # raw results so a red run can be diagnosed without reproducing locally — e.g. the
+      # trace/screenshot for a mobile-only layout failure.
+      - name: Upload Playwright artifacts on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-artifacts
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7
+          if-no-files-found: ignore

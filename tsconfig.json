@@ -1,0 +1,37 @@
+{
+  // Base config used by the editor and the `typecheck` gate (tsc --noEmit).
+  // It type-checks EVERYTHING the repo owns: src + tests + e2e + the root configs.
+  // A product that emits (a library, say) adds a narrower tsconfig.build.json that
+  // extends this one and sets outDir/rootDir — see weaverbit-core for a worked example.
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "jsx": "react-jsx",
+
+    // Strictness: every Weaverbit repo is a public hiring artifact — no escape hatches.
+    // CLAUDE.md §7 forbids `any`/`@ts-ignore` to move faster; these flags make that stick.
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+
+    // Force explicit `import type` and one-module-per-file semantics so output is
+    // unambiguous for bundler consumers (Next.js / Vite) and transpile-only tools.
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+
+    "noEmit": true
+  },
+  // src/, tests/ and e2e/ are the spine (STRUCTURE.md §2) and may be empty in a fresh
+  // copy; the root configs below guarantee tsc always has at least one input, so the
+  // gate never dies with TS18003 "No inputs were found" before the product has code.
+  "include": ["src", "tests", "e2e", "*.config.ts"]
+}

@@ -1,0 +1,40 @@
+{
+  "name": "weaverbit-template",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Starter repo every Weaverbit product is born from: the process docs, the Claude Code harness, and the verified tooling spine (the five gates).",
+  "license": "UNLICENSED",
+  "repository": "github:adityapathak9893/weaverbit-template",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "echo 'weaverbit-template: no app yet \u2014 replace this script with the product dev server (e.g. next dev / vite).'",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint . --max-warnings 0 && prettier --check .",
+    "format": "prettier --check .",
+    "format:write": "prettier --write .",
+    "test": "vitest run --passWithNoTests",
+    "e2e": "playwright test --pass-with-no-tests",
+    "build": "echo 'weaverbit-template: no app yet \u2014 replace this script with the product build (e.g. next build / tsc -p tsconfig.build.json).'"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.17.0",
+    "@playwright/test": "^1.49.1",
+    "@types/node": "^22.10.2",
+    "eslint": "^9.17.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "globals": "^15.14.0",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.18.2",
+    "vitest": "^2.1.8"
+  },
+  "allowScripts": {
+    "esbuild": true,
+    "fsevents": true,
+    "github:adityapathak9893/weaverbit-core": true
+  }
+}
