@@ -1,23 +1,23 @@
 {
-  "name": "weaverbit-template",
+  "name": "weaverbit-web",
   "version": "0.1.0",
   "private": true,
-  "description": "Starter repo every Weaverbit product is born from: the process docs, the Claude Code harness, and the verified tooling spine (the five gates).",
+  "description": "Weaverbit's portfolio site and writing.",
   "license": "UNLICENSED",
-  "repository": "github:adityapathak9893/weaverbit-template",
+  "repository": "github:adityapathak9893/weaverbit-web",
   "type": "module",
   "engines": {
     "node": ">=20"
   },
   "scripts": {
-    "dev": "echo 'weaverbit-template: no app yet \u2014 replace this script with the product dev server (e.g. next dev / vite).'",
+    "dev": "echo 'weaverbit-template: no app yet — replace this script with the product dev server (e.g. next dev / vite).'",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "lint": "eslint . --max-warnings 0 && prettier --check .",
     "format": "prettier --check .",
     "format:write": "prettier --write .",
     "test": "vitest run --passWithNoTests",
     "e2e": "playwright test --pass-with-no-tests",
-    "build": "echo 'weaverbit-template: no app yet \u2014 replace this script with the product build (e.g. next build / tsc -p tsconfig.build.json).'"
+    "build": "echo 'weaverbit-template: no app yet — replace this script with the product build (e.g. next build / tsc -p tsconfig.build.json).'"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
@@ -36,5 +36,8 @@
     "esbuild": true,
     "fsevents": true,
     "github:adityapathak9893/weaverbit-core": true
+  },
+  "dependencies": {
+    "weaverbit-core": "github:adityapathak9893/weaverbit-core#v0.1.1"
   }
 }
